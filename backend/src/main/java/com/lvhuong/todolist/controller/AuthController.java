@@ -8,6 +8,7 @@ import com.lvhuong.todolist.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import java.net.URI;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = "http://localhost:5173")
 public class AuthController {
 
     private final UserService userService;
@@ -28,7 +30,7 @@ public class AuthController {
         userDto.setToken(userAuthProvider.createToken(userDto.getUsername()));
         userDto.setPassword("");
 
-        return new ResponseEntity(userDto, HttpStatus.OK);
+        return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
     @PostMapping("/register")

@@ -34,7 +34,7 @@ public class UserService {
     }
 
     public UserDto login(CredentialsDto credentialsDto){
-        UserEntity user = userRepository.findByUsername(credentialsDto.getLogin())
+        UserEntity user = userRepository.findByUsername(credentialsDto.getUsername())
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
 
         if(passwordEncoder.matches(CharBuffer.wrap(credentialsDto.getPassword()), user.getPassword())){
