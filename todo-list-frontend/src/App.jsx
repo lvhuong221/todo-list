@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { createContext, useContext, useState } from 'react'
 import './App.css'
+import Home from './pages/Home'
+import TodoList from './pages/TodoList'
+import About from './pages/About'
+import { Route, Routes, redirect } from 'react-router-dom'
+import FormLogin from './pages/FormLogin'
+import NavBar from './components/NavBar'
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import PageNotFound from './pages/PageNotFound'
+import authContext from './Context/AuthContext'
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+
+  const [authenticated, setAuthenticated] = useState(false);
+  
+
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <authContext.Provider value={{authenticated, setAuthenticated}}>
+
+        <NavBar></NavBar>
+        <div className='container'>
+          <Routes>
+            <Route patch="/*" element={<PageNotFound />}></Route>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/todo-list" element={<TodoList />}></Route>
+            <Route path="/about" element={<About />}></Route>
+            <Route path="/login" element={<FormLogin />}></Route>
+          </Routes>
+        </div>
+      </authContext.Provider>
     </>
   )
 }
 
-export default App
+
