@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Setter
@@ -21,4 +22,8 @@ public class RoleEntity {
 
     @ManyToMany(mappedBy = "roles")
     private Set<UserEntity> users;
+
+    protected boolean isDeleted = false;
+    protected LocalDateTime createDate = LocalDateTime.now();
+    protected LocalDateTime lastUpdate;
 }

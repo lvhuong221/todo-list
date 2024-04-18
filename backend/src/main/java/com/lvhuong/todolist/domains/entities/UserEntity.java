@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Set;
 
 @Data
@@ -34,4 +36,11 @@ public class UserEntity {
             joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<RoleEntity> roles;
+
+    @OneToMany(mappedBy = "user")
+    private Set<TodoList> todoLists;
+
+    protected boolean isDeleted = false;
+    protected LocalDateTime createDate = LocalDateTime.now();
+    protected LocalDateTime lastUpdate;
 }

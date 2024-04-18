@@ -11,10 +11,15 @@ import com.lvhuong.todolist.repositories.RoleRepository;
 import com.lvhuong.todolist.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.nio.CharBuffer;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -59,6 +64,7 @@ public class UserService {
 
         RoleEntity roles = roleRepository.findByName("ROLE_USER").get();
         newUser.setRoles(Collections.singleton(roles));
+//        newUser.setCreateDate(LocalDateTime.now());
 
         UserEntity savedUser = userRepository.save(newUser);
 

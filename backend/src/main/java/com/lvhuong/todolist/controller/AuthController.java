@@ -8,6 +8,10 @@ import com.lvhuong.todolist.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,16 +32,20 @@ public class AuthController {
         UserDto userDto = userService.login(credentialsDto);
 
         userDto.setToken(userAuthProvider.createToken(userDto.getUsername()));
-        userDto.setPassword("");
 
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
     @PostMapping("/register")
     public ResponseEntity<UserDto> register(@RequestBody SignUpDto signUpDto){
-        UserDto userDto = userService.register(signUpDto);
-        userDto.setToken(userAuthProvider.createToken(userDto.getUsername()));
+        try{
+            UserDto userDto = userService.register(signUpDto);
+            userDto.setToken(userAuthProvider.createToken(userDto.getUsername()));
 
-        return ResponseEntity.created(URI.create("/users/"+userDto.getId())).body(userDto);
+            return ResponseEntity.created(URI.create("/users/"+userDto.getId())).body(userDto);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
     }
 }
