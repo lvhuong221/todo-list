@@ -18,7 +18,7 @@ import java.util.List;
 @EnableWebMvc
 public class WebConfig {
     // Expire date for tokens
-    private static final Long MAX_AGE = 60L * 60L * 24L;
+    private static final Long MAX_AGE = 3_600_000L;
     private static final int CORS_FILTER_ORDER = -102;
 
     @Bean

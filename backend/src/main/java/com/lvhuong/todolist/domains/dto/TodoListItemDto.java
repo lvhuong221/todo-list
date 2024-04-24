@@ -17,6 +17,7 @@ public class TodoListItemDto {
     private Integer orderInList;
     private String description;
     private TodoListItemStatus status;
+    private boolean isDeleted;
 
     @Override
     public int hashCode(){

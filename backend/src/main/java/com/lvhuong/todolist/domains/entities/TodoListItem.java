@@ -1,12 +1,12 @@
 package com.lvhuong.todolist.domains.entities;
 
-import com.lvhuong.todolist.domains.dto.TodoListItemDto;
 import com.lvhuong.todolist.enums.TodoListItemStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDateTime;
 
@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@SQLRestriction("is_deleted <> true")
 @Table(name = "todo_list_item")
 public class TodoListItem {
     @Id
@@ -27,9 +28,9 @@ public class TodoListItem {
 
     private TodoListItemStatus status;
 
-    @ManyToOne
-    @JoinColumn(name="todo_list_id", referencedColumnName="id")
-    private TodoList parentList;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="todo_list_id",referencedColumnName ="id", updatable = false)
+    private TodoList parent;
 
     protected boolean isDeleted = false;
     protected LocalDateTime createDate;

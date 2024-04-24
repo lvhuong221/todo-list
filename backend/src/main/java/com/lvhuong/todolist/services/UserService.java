@@ -70,5 +70,11 @@ public class UserService {
 
         return userMapper.mapTo(savedUser);
     }
+
+    public UserDto getCurrentUser(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return (UserDto) auth.getPrincipal();
+    }
+
 }
 

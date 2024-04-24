@@ -37,7 +37,7 @@ public class UserEntity {
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private Set<RoleEntity> roles;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade=CascadeType.PERSIST)
     private Set<TodoList> todoLists;
 
     protected boolean isDeleted = false;
