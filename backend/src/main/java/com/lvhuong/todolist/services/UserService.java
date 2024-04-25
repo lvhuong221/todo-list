@@ -64,7 +64,6 @@ public class UserService {
 
         RoleEntity roles = roleRepository.findByName("ROLE_USER").get();
         newUser.setRoles(Collections.singleton(roles));
-//        newUser.setCreateDate(LocalDateTime.now());
 
         UserEntity savedUser = userRepository.save(newUser);
 

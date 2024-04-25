@@ -1,0 +1,1 @@
+insert into roles (name, is_deleted) values ('ROLE_USER', false), ('ROLE_ADMIN', false);

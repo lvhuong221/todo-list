@@ -1,15 +1,18 @@
 package com.lvhuong.todolist.domains.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.time.LocalDateTime;
 import java.util.Set;
 
-@Setter
-@Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
+@SQLRestriction("is_deleted <> true")
 @Table(name = "roles")
 public class RoleEntity {
 

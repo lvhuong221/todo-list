@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Arrays;
 import java.util.List;
 
+// For frontend testing
 @RestController
 @CrossOrigin(origins = "http://localhost:5173")
 public class MessageController {
