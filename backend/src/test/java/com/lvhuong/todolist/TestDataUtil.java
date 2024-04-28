@@ -2,9 +2,16 @@ package com.lvhuong.todolist;
 
 import com.lvhuong.todolist.domains.dto.CredentialsDto;
 import com.lvhuong.todolist.domains.dto.SignUpDto;
+import com.lvhuong.todolist.domains.dto.TodoListDto;
+import com.lvhuong.todolist.domains.dto.TodoListItemDto;
 import com.lvhuong.todolist.domains.entities.TodoList;
 import com.lvhuong.todolist.domains.entities.UserEntity;
+import com.lvhuong.todolist.enums.TodoListItemStatus;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @NoArgsConstructor
 public final class TestDataUtil {
@@ -39,7 +46,6 @@ public final class TestDataUtil {
                 .isDeleted(false)
                 .build();
     }
-
 
     public static TodoList createTodoListA(UserEntity user) {
         return TodoList.builder()
@@ -79,5 +85,26 @@ public final class TestDataUtil {
                 .username("johndoe")
                 .password("password".toCharArray())
                 .build();
+    }
+
+    public static TodoListDto CreateTodoListDto(){
+        return TodoListDto.builder()
+                .title("List title")
+                .listItems(createTodoListItemsDto())
+                .build();
+    }
+
+    public static List<TodoListItemDto> createTodoListItemsDto(){
+        TodoListItemDto itemA = TodoListItemDto.builder()
+                .description("Planned action A")
+                .orderInList(0)
+                .status(TodoListItemStatus.PLANNED)
+                .build();
+        TodoListItemDto itemB = TodoListItemDto.builder()
+                .description("Planned action B")
+                .orderInList(0)
+                .status(TodoListItemStatus.PLANNED)
+                .build();
+        return Arrays.asList(itemA, itemB);
     }
 }

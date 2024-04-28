@@ -43,7 +43,7 @@ public class TodoListController {
     }
 
     @GetMapping("/todo-list/{id}")
-    public ResponseEntity<TodoListDto> findTodoList(@RequestParam("id") Long id){
+    public ResponseEntity<TodoListDto> findTodoList(@PathVariable Long id){
         UserDto userDto = userService.getCurrentUser();
         Optional<TodoList> result = todoListService.findOne(userDto.getId(), id);
 
@@ -100,8 +100,8 @@ public class TodoListController {
     public ResponseEntity deleteTodoList(@PathVariable Long todoListId) {
         UserDto userDto = userService.getCurrentUser();
 
-        // Check if todoList belongs to current user
-        if (todoListService.existByIdAndUserId(userDto.getId(), todoListId)) {
+        // Check if todoList belongs to the current user
+        if (!todoListService.existByIdAndUserId(userDto.getId(), todoListId)) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         boolean deleteResult = todoListService.delete(todoListId);

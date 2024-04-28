@@ -23,13 +23,11 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 @AutoConfigureMockMvc
 public class AuthControllerIntergrationTest {
 
-    private UserService userService;
-    private MockMvc mockMvc;
-    private ObjectMapper objectMapper;
+    private final MockMvc mockMvc;
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    public AuthControllerIntergrationTest(UserService userService, MockMvc mockMvc, ObjectMapper objectMapper) {
-        this.userService = userService;
+    public AuthControllerIntergrationTest(MockMvc mockMvc, ObjectMapper objectMapper) {
         this.mockMvc = mockMvc;
         this.objectMapper = objectMapper;
     }

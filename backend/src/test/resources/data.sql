@@ -1,1 +1,2 @@
 insert into roles (name, is_deleted) values ('ROLE_USER', false), ('ROLE_ADMIN', false);
+insert into app_user(first_name, last_name, username, password, is_deleted) values ('Huong', 'Le Van', 'userTest', 'dummy password', false);

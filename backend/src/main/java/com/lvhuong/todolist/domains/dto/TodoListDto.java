@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,7 +18,7 @@ public class TodoListDto {
 
     private String title;
 
-    private ArrayList<TodoListItemDto> listItems;
+    private List<TodoListItemDto> listItems;
 
     private boolean isDeleted;
 
