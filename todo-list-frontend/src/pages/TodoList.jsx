@@ -1,6 +1,45 @@
 import React, { useState, useEffect } from "react";
-import { request } from "../helpers/axios_helper";
 import './todoList.css'
+
+
+const testData = [{
+  id: 1,
+  title: "My todo list 3",
+  todoListItems: [
+    {
+      id: 3,
+      orderInList: 0,
+      description: "Study English",
+      status: "planned",
+      isDeleted: false
+    }, {
+      id: 4,
+      orderInList: 1,
+      description: "Make essay",
+      status: "planned",
+      isDeleted: false
+    }],
+  isDeleted: false
+},
+{
+  id: 2,
+  title: "My todo list 5",
+  todoListItems: [
+    {
+      id: 5,
+      orderInList: 2,
+      description: "Study English",
+      status: "planned",
+      isDeleted: false
+    }, {
+      id: 6,
+      orderInList: 0,
+      description: "Make essay",
+      status: "planned",
+      isDeleted: false
+    }],
+  isDeleted: false
+}];
 
 function TodoList(props) {
 
@@ -12,78 +51,26 @@ function TodoList(props) {
 
   function getAllTodoList() {
     setState("fetching");
-    // request(
-    //   "GET",
-    //   "/todo-list",
-    //   {
-    //     page: currentPage,
-    //     size: pageSize
-    //   }).then(
-    //     (response) => {
-    //       setState("finished");
-    //       setTodoLists(response.data.content);
-    //       sortListData();
-    //     }).catch(
-    //       (error) => {
-    //         onRequestFailed(error);
-    //         setState("failed");
-    //       }
-    //     );
     setTestData();
   }
 
-  function setTestData() {
+  // Pure sorting function (reusable, testable)
+  const sortTodoLists = (lists) => {
+    return [...lists]
+      .sort((a, b) => a.id - b.id) // Numeric sort
+      .map(list => ({
+        ...list,
+        todoListItems: [...list.todoListItems]
+          .sort((a, b) => a.orderInList - b.orderInList)
+      }));
+  };
 
-    setTodoLists([{
-      id: 1,
-      title: "My todo list 3",
-      todoListItems: [
-        {
-          id: 3,
-          orderInList: 0,
-          description: "Study English",
-          status: "planned",
-          isDeleted: false
-        }, {
-          id: 4,
-          orderInList: 1,
-          description: "Make essay",
-          status: "planned",
-          isDeleted: false
-        }],
-      isDeleted: false
-    },
-    {
-      id: 2,
-      title: "My todo list 5",
-      todoListItems: [
-        {
-          id: 5,
-          orderInList: 2,
-          description: "Study English",
-          status: "planned",
-          isDeleted: false
-        }, {
-          id: 6,
-          orderInList: 0,
-          description: "Make essay",
-          status: "planned",
-          isDeleted: false
-        }],
-      isDeleted: false
-    }], sortListData());
-
-  }
-
-  function sortListData() {
-    let updatedLists = [...todoLists];
-    updatedLists.sort((a, b) => a.id > b.id ? 1 : -1)
-    updatedLists.map(list => {
-      list.todoListItems.sort((a, b) => a.orderInList > b.orderInList ? 1 : -1);
-    })
-    setTodoLists(updatedLists);
+  // Clean component logic
+  const setTestData = () => {
+    const sortedData = sortTodoLists(testData);
+    setTodoLists(sortedData);
     setState("finished");
-  }
+  };
 
   function onRequestFailed(error) {
     if (error.status === 401) {

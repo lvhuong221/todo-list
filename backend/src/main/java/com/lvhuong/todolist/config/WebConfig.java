@@ -1,5 +1,7 @@
 package com.lvhuong.todolist.config;
 
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,17 +18,20 @@ import java.util.List;
 
 @Configuration
 @EnableWebMvc
+@RequiredArgsConstructor
 public class WebConfig {
     // Expire date for tokens
     private static final Long MAX_AGE = 3_600_000L;
     private static final int CORS_FILTER_ORDER = -102;
+    @Value("${allowed.origin}")
+    private final String allowedOrigin;
 
     @Bean
     public FilterRegistrationBean filterRegistrationBean() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:5173");
+        config.addAllowedOrigin(allowedOrigin);
         config.setAllowedHeaders(Arrays.asList(
                 HttpHeaders.AUTHORIZATION,
                 HttpHeaders.CONTENT_TYPE,

@@ -1,4 +1,6 @@
 security.jwt.token.secret-key: my-secret-key
+allowed:
+  origin: http://localhost:5173
 
 spring:
   datasource:

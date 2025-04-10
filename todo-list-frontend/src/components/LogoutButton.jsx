@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react'
 import authContext from '../Context/AuthContext';
-import { request, setAuthHeader } from '../helpers/axios_helper';
 import { Navigate } from 'react-router-dom';
+import { setAuthHeader } from '../helpers/auth';
 
 function LogoutButton() {
     const { authenticated, setAuthenticated } = useContext(authContext);

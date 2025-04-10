@@ -1,9 +1,9 @@
 import React, { useContext, useState } from 'react';
 import classNames from 'classnames';
-import { getAuthToken, request, setAuthHeader } from '../../helpers/axios_helper.js';
-import { Navigate } from 'react-router-dom';
 import authContext from '../../Context/AuthContext.jsx';
 import { useNavigate } from "react-router-dom";
+import { login, register } from '../../helpers/httpService.js';
+import { setAuthHeader } from '../../helpers/auth.js';
 
 function FormLogin(props) {
 
@@ -40,19 +40,12 @@ function FormLogin(props) {
 
   function onSubmitLogin(e) {
     e.preventDefault();
-    request(
-      "POST",
-      "/auth/login",
-      {
-        username: loginDto.username,
-        password: loginDto.password
-      }, 
-      onLoginSuccessfully, 
-      onLoginFailed);
+    login()
+      .then(onLoginSuccessfully)
+      .catch( onLoginFailed);
   };
 
   function onLoginSuccessfully(response) {
-    debugger
     setAuthHeader(response.data.token);
     setAuthenticated(true);
     console.log(response.data.token);
@@ -66,30 +59,22 @@ function FormLogin(props) {
 
   function onSubmitRegister(event) {
     event.preventDefault();
-    request(
-      "POST",
-      "/register",
-      {
-        firstName: signUpDto.firstName,
-        lastName: signUpDto.lastName,
-        login: signUpDto.username,
-        password: signUpDto.password
-      }).then(
-        (response) => {
-          setAuthHeader(response.data.token);
-          setFormState("messages");
-        }).catch(
-          (error) => {
-            setAuthHeader(null);
-            setFormState("welcome")
-          }
-        );
+    const data = {
+      firstName: signUpDto.firstName,
+      lastName: signUpDto.lastName,
+      login: signUpDto.username,
+      password: signUpDto.password
+    }
+    register(data).then((response) => {
+      setAuthHeader(response.data.token);
+      setFormState("messages");
+    }).catch(
+      (error) => {
+        setAuthHeader(null);
+        setFormState("welcome")
+      }
+    );
   };
-
-  // if (getAuthToken() !== null) {
-  //   console.log("User already logged in, going to /");
-  //   return <Navigate to="/" />
-  // }
 
   if(authenticated){
     return(

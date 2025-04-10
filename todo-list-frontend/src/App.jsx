@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { useState } from 'react'
 import './App.css'
 import Home from './pages/Home'
 import TodoList from './pages/TodoList'
@@ -9,10 +9,12 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import PageNotFound from './pages/PageNotFound'
 import authContext from './Context/AuthContext';
 import FormLogin from './login/views/FormLogin'
+import { getToken } from './helpers/httpService'
 
 export default function App() {
 
   const [authenticated, setAuthenticated] = useState(false);
+  getToken();
   
   return (
     <>
