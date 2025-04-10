@@ -1,0 +1,85 @@
+ul.todo-list {
+    align-self: center;
+    list-style-type: none;
+    display: inline-block;
+    width: 60%;
+    background-color: aqua;
+    padding: 10px 5px 5px 5px;
+    border-radius: 5px;
+}
+
+.todo-list-delete {
+    display: flexbox;
+    align-items: end;
+    margin-left: auto;    
+}
+
+ul.todo-list li{
+    display: block;
+    align-content: left;
+}
+
+ul.todo-list-items{
+    list-style-type: none;
+    background-color: antiquewhite;
+}
+
+ul.todo-list-items li:nth-child(odd) { background: rgb(142, 142, 142); }
+
+ul.todo-list-items li{
+    display: flex;
+    margin: 5px;
+    padding: 5px 0px;
+}
+
+.todo-list-item-des {
+    text-align: left;
+}
+
+.todo-list-item-control {
+    text-align: right;
+    margin-left: auto;
+}
+
+.todo-list-item-order {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.control-button {
+    border-radius: 5px;
+    background: none;
+    margin: 0px 5px;
+}
+
+.item-move-up, .item-move-down:hover {
+    color: black;
+}
+
+.item-move-up, .item-move-down {
+    background-color: rgb(96, 88, 255);
+    color: aliceblue;
+}
+
+.item-delete {
+    background-color: rgb(255, 59, 59);
+    padding: 0px 10px;
+}
+
+.todo-list-delete {
+    height: fit-content;
+    background-color: rgb(255, 59, 59);
+    padding: 0px 10px;
+}
+
+.loading-image {
+    animation: App-logo-spin infinite 1s linear;
+}
+
+.todo-list-row{
+    display: flex;
+}
+
+.display-box {
+    text-align: center;
+}

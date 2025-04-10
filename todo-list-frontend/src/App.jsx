@@ -19,11 +19,10 @@ export default function App() {
   return (
     <>
       <authContext.Provider value={{authenticated, setAuthenticated}}>
-
         <NavBar></NavBar>
         <div className='container'>
           <Routes>
-            <Route patch="/*" element={<PageNotFound />}></Route>
+            <Route patch="/*" element={<PageNotFound/>}></Route>
             <Route path="/" element={<Home />}></Route>
             <Route path="/todo-list" element={<TodoList />}></Route>
             <Route path="/about" element={<About />}></Route>

@@ -5,20 +5,21 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import classNames from 'classnames';
 import authContext from '../Context/AuthContext';
 import '../components/dropdown.css'
+import LogoutButton from '../components/LogoutButton';
 
 function HomePage() {
 
     const [state, setState] = useState("welcomeGuest");
-    const {isAuthenticated} = useContext(authContext);
+    const {authenticated, setAuthenticated} = useContext(authContext);
 
     useEffect(() => {
-        if (isAuthenticated === true) {
+        if (authenticated === true) {
             setState("loggedIn")
         } else {
             setState("welcomeGuest")
         }
         console.log(state);
-    }, [isAuthenticated])
+    }, [authenticated])
 
     return (
         <>
@@ -29,6 +30,7 @@ function HomePage() {
                     <Link className="login-button" to="/login">Login</Link>
                 </button>
             }
+            <LogoutButton></LogoutButton>
         </>
     )
 
