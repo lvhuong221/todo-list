@@ -18,7 +18,8 @@ import java.net.URI;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/auth")
 public class AuthController {
 
     private final UserService userService;

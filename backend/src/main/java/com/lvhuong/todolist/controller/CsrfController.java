@@ -1,4 +1,4 @@
-package com.lvhuong.todolist.config;
+package com.lvhuong.todolist.controller;
 
 import org.springframework.security.web.server.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.GetMapping;

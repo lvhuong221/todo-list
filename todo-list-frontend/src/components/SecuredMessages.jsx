@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { request, setAuthToken } from '../helpers/axios_helper';
+import { request, setAuthHeader } from '../helpers/axios_helper';
 import classNames from 'classnames';
 import authContext from '../Context/AuthContext';
 
@@ -12,20 +12,19 @@ function securedMessages(props) {
     useEffect(() => {request(
         "GET",
         "/messages",
-        {}).then(
-            (response) => {
-                setListMessages(response.data);
-                setAuthenticated(true);
-            }).catch(
-                (error) => {
-                    console.log(error);
-                    if (error.response.status == 401) {
-                        setAuthToken(null);
-                        setListMessages([]);
-                    }
-                    setAuthenticated(false);
-                }
-            );}, [])
+        {}, (response) => {
+            setListMessages(response.data);
+            setAuthenticated(true);
+        },
+        (error) => {
+            console.log(error);
+            if (error.response.status == 401) {
+                setAuthHeader(null);
+                setListMessages([]);
+            }
+            setAuthenticated(false);
+        }
+    )}, []);
 
     if (authenticated === true) {
         return (<div>

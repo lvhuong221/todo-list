@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import classNames from 'classnames';
-import { getAuthToken, request, setAuthToken } from '../helpers/axios_helper.js';
+import { getAuthToken, request, setAuthHeader } from '../../helpers/axios_helper.js';
 import { Navigate } from 'react-router-dom';
-import authContext from '../Context/AuthContext';
+import authContext from '../../Context/AuthContext.jsx';
 import { useNavigate } from "react-router-dom";
 
 function FormLogin(props) {
@@ -12,27 +12,28 @@ function FormLogin(props) {
   const {authenticated, setAuthenticated } = useContext(authContext)
   const [formState, setFormState] = useState("login");
   const [loginDto, setLoginDto] = useState({
-    login: "",
+    username: "",
     password: "",
   });
   const [signUpDto, setSignUpDto] = useState({
     firstName: "",
     lastName: "",
-    login: "",
+    username: "",
     password: "",
   })
 
   function handleLoginInputChange(event) {
     let name = event.target.name;
-    let value = event.target.value;
+    let value = event.target.value.trim();
     setLoginDto(l => ({ ...l, [name]: value }));
   }
 
   function handleSignupInputChange(event) {
     let name = event.target.name;
-    let value = event.target.value;
+    let value = event.target.value.trim();
     setSignUpDto(s => ({ ...s, [name]: value }));
   }
+  
   function handleChangeFormState(event) {
     setFormState(event.target.name);
   }
@@ -41,22 +42,18 @@ function FormLogin(props) {
     e.preventDefault();
     request(
       "POST",
-      "/login",
+      "/auth/login",
       {
-        username: loginDto.login,
+        username: loginDto.username,
         password: loginDto.password
-      }).then(
-        (response) => {
-          onLoginSuccessfully(response);
-        }).catch(
-          (error) => {
-            onLoginFailed(error);
-          }
-        );
+      }, 
+      onLoginSuccessfully, 
+      onLoginFailed);
   };
 
   function onLoginSuccessfully(response) {
-    setAuthToken(response.data.token);
+    debugger
+    setAuthHeader(response.data.token);
     setAuthenticated(true);
     console.log(response.data.token);
     navigate('/');
@@ -79,11 +76,11 @@ function FormLogin(props) {
         password: signUpDto.password
       }).then(
         (response) => {
-          setAuthToken(response.data.token);
+          setAuthHeader(response.data.token);
           setFormState("messages");
         }).catch(
           (error) => {
-            setAuthToken(null);
+            setAuthHeader(null);
             setFormState("welcome")
           }
         );
@@ -119,7 +116,7 @@ function FormLogin(props) {
 
               <div className="form-outline mb-4">
                 <label className="form-label" htmlFor="loginName">Username</label>
-                <input type="login" id="loginName" name="login" className="form-control" value={loginDto.login}
+                <input type="text" id="username" name="username" className="form-control" value={loginDto.username}
                   onChange={handleLoginInputChange} placeholder='Username' />
               </div>
 
@@ -147,8 +144,8 @@ function FormLogin(props) {
               </div>
 
               <div className="form-outline mb-4">
-                <input type="text" id="username" name="login" className="form-control" value={signUpDto.login} onChange={handleSignupInputChange} />
-                <label className="form-label" htmlFor="login">Username</label>
+                <input type="text" id="usernameSignUp" name="loginSignup" className="form-control" value={signUpDto.username} onChange={handleSignupInputChange} />
+                <label className="form-label" htmlFor="loginSignup">Username</label>
               </div>
 
               <div className="form-outline mb-4">
@@ -165,4 +162,4 @@ function FormLogin(props) {
   );
 
 }
-export default FormLogin
+export default FormLogin;

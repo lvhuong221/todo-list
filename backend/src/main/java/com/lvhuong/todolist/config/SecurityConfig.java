@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
 
 @RequiredArgsConstructor
 @Configuration
@@ -27,15 +29,19 @@ public class SecurityConfig {
         http.exceptionHandling(exception -> {
                     exception.authenticationEntryPoint((userAuthenticationEntryPoint));
                 })
-                .csrf(Customizer.withDefaults())
+                .csrf(csrf -> csrf
+                        .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+                        .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
+                )
                 .cors(Customizer.withDefaults())
                 .addFilterBefore(new JwtAuthFilter(userAuthProvider), BasicAuthenticationFilter.class)
                 .sessionManagement(session -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })
                 .authorizeHttpRequests(request -> {
+                    request.requestMatchers(HttpMethod.GET, "/").permitAll();
                     request.requestMatchers(HttpMethod.GET, "/v1/csrf").permitAll();
-                    request.requestMatchers(HttpMethod.POST, "/login", "/register").permitAll();
+                    request.requestMatchers(HttpMethod.POST, "/auth/login", "/register").permitAll();
                     request.anyRequest().authenticated();
                 });
         return http.build();

@@ -48,6 +48,8 @@ public class UserAuthenticationProvider {
     }
 
     public Authentication validateToken(String token){
+        if(token.isEmpty() || token.equals("null"))
+            return null;
         JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secretKey)).build();
 
         DecodedJWT decodedJWT = verifier.verify(token);

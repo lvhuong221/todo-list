@@ -1,2 +1,5 @@
-package com.lvhuong.todolist.config;public class CorsConfig {
+package com.lvhuong.todolist.config;
+
+public class CorsConfig {
+
 }
