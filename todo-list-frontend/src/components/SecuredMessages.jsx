@@ -7,7 +7,7 @@ function securedMessages(props) {
 
     const [listMessages, setListMessages] = useState([]);
     const listMessagesElements = [];
-    const {authenticated, setAuthenticated} = useContext(authContext)
+    const {authenticated, setAuthenticated} = useContext(authContext);
 
     useEffect(() => {request(
         "GET",
@@ -27,7 +27,7 @@ function securedMessages(props) {
                 }
             );}, [])
 
-    if (authContext.authenticated === true) {
+    if (authenticated === true) {
         return (<div>
             <ul>{listMessages.map(item =>
                 <li key={item}>
