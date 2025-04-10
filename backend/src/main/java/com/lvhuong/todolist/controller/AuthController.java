@@ -36,6 +36,13 @@ public class AuthController {
         return new ResponseEntity<>(userDto, HttpStatus.OK);
     }
 
+    @PostMapping("logout")
+    public ResponseEntity logout()
+    {
+        userService.logout();
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/register")
     public ResponseEntity<UserDto> register(@RequestBody SignUpDto signUpDto){
         try{
@@ -48,4 +55,5 @@ public class AuthController {
         }
 
     }
+
 }

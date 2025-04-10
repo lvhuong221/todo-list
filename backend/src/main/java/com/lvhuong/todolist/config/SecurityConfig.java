@@ -27,13 +27,14 @@ public class SecurityConfig {
         http.exceptionHandling(exception -> {
                     exception.authenticationEntryPoint((userAuthenticationEntryPoint));
                 })
-                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(Customizer.withDefaults())
                 .cors(Customizer.withDefaults())
                 .addFilterBefore(new JwtAuthFilter(userAuthProvider), BasicAuthenticationFilter.class)
                 .sessionManagement(session -> {
                     session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
                 })
                 .authorizeHttpRequests(request -> {
+                    request.requestMatchers(HttpMethod.GET, "/v1/csrf").permitAll();
                     request.requestMatchers(HttpMethod.POST, "/login", "/register").permitAll();
                     request.anyRequest().authenticated();
                 });

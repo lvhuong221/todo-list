@@ -75,5 +75,8 @@ public class UserService {
         return (UserDto) auth.getPrincipal();
     }
 
+    public void logout() {
+        SecurityContextHolder.clearContext();
+    }
 }
 
