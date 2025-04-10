@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import classNames from 'classnames';
-import { getAuthToken, request, setAuthToken } from '../helpers/axios_helper';
+import { getAuthToken, request, setAuthToken } from '../helpers/axios_helper.js';
 import { Navigate } from 'react-router-dom';
 import authContext from '../Context/AuthContext';
 import { useNavigate } from "react-router-dom";

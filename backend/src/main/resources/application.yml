@@ -15,3 +15,11 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+cors:
+  allowed-origins: http://localhost:5173
+  allowed-methods: GET,POST,PUT,DELETE
+  allowed-headers: Content-Type,Authorization
+  exposed-headers:
+  allow-credentials: true
+  max-age: 3600
